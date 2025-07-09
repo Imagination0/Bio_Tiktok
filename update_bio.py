@@ -1,32 +1,30 @@
-from playwright.async_api import async_playwright
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import time
 import os
 
-SESSION_DIR = "sessions"
+PROFILE_DIR = os.path.join(os.getcwd(), "chrome_profile")
 
-# Ganti path Chrome sesuai lokasi di komputer Windows kamu jika berbeda
-CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+def update_tiktok_bio(new_bio):
+    options = Options()
+    options.add_argument(f"user-data-dir={PROFILE_DIR}")
+    options.add_argument("--start-maximized")
+    driver = webdriver.Chrome(options=options)
 
-async def update_tiktok_bio(new_bio):
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            executable_path=CHROME_PATH,
-            headless=False
-        )
-        context = await browser.new_context(
-            storage_state=f"{SESSION_DIR}/state.json" if os.path.exists(f"{SESSION_DIR}/state.json") else None
-        )
-        page = await context.new_page()
+    driver.get("https://www.tiktok.com/settings/profile")
+    time.sleep(10)
 
-        if not os.path.exists(f"{SESSION_DIR}/state.json"):
-            await page.goto("https://www.tiktok.com/login")
-            print("Silakan login secara manual di browser. Tekan Enter setelah login.")
-            input("Tekan Enter jika sudah login...")
-            os.makedirs(SESSION_DIR, exist_ok=True)
-            await context.storage_state(path=f"{SESSION_DIR}/state.json")
+    try:
+        textarea = driver.find_element(By.TAG_NAME, "textarea")
+        textarea.clear()
+        textarea.send_keys(new_bio)
+        time.sleep(1)
+        save_button = driver.find_element(By.XPATH, "//button[contains(text(),'Save')]")
+        save_button.click()
+        print("Bio updated successfully")
+    except Exception as e:
+        print("Gagal update bio:", e)
 
-        await page.goto("https://www.tiktok.com/settings/profile")
-        await page.wait_for_selector("textarea")
-        await page.fill("textarea", new_bio)
-        await page.click("button:has-text('Save')")
-        await page.wait_for_timeout(2000)
-        await browser.close()
+    time.sleep(5)
+    driver.quit()
