@@ -8,7 +8,7 @@ USERNAME = 'your_username'
 
 async def job():
     total_views = get_total_views(USERNAME)
-    bio_text = f"Total Views: {total_views}"
+    bio_text = f"Jumblah Total Views: {total_views}"
     await update_tiktok_bio(bio_text)
     print(f"[UPDATED] {bio_text}")
 
