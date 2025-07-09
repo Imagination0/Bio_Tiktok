@@ -7,7 +7,6 @@ def get_total_views(username):
         "User-Agent": "Mozilla/5.0",
     }
     res = requests.get(url, headers=headers)
-    
-    matches = re.findall(r'"playCount":(\d+)', res.text)
+    matches = re.findall(r'"playCount":(\\d+)', res.text)
     total_views = sum(map(int, matches))
     return total_views
