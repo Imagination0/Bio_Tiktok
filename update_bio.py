@@ -1,18 +1,18 @@
+import time
+import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+
+# Auto-install Chromedriver yang cocok dengan versi Chrome kamu
+chromedriver_autoinstaller.install()
 
 def update_tiktok_bio(new_bio):
     options = Options()
-
-    # Pakai profil Chrome kamu yang sudah login TikTok
     options.add_argument(r"--user-data-dir=C:\Users\Lenovo\AppData\Local\Google\Chrome\User Data")
     options.add_argument("--profile-directory=Profile 6")
-
-    # Jangan headless agar bisa lihat apa yang terjadi
     options.add_argument("--start-maximized")
 
     driver = webdriver.Chrome(options=options)
