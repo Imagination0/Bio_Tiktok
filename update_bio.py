@@ -3,10 +3,18 @@ import os
 
 SESSION_DIR = "sessions"
 
+# Ganti path Chrome sesuai lokasi di komputer Windows kamu jika berbeda
+CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+
 async def update_tiktok_bio(new_bio):
     async with async_playwright() as p:
-        browser = await p.chromium.launch(executable_path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", headless=False)
-        context = await browser.new_context(storage_state=f"{SESSION_DIR}/state.json" if os.path.exists(f"{SESSION_DIR}/state.json") else None)
+        browser = await p.chromium.launch(
+            executable_path=CHROME_PATH,
+            headless=False
+        )
+        context = await browser.new_context(
+            storage_state=f"{SESSION_DIR}/state.json" if os.path.exists(f"{SESSION_DIR}/state.json") else None
+        )
         page = await context.new_page()
 
         if not os.path.exists(f"{SESSION_DIR}/state.json"):
@@ -15,7 +23,7 @@ async def update_tiktok_bio(new_bio):
             input("Tekan Enter jika sudah login...")
             os.makedirs(SESSION_DIR, exist_ok=True)
             await context.storage_state(path=f"{SESSION_DIR}/state.json")
-        
+
         await page.goto("https://www.tiktok.com/settings/profile")
         await page.wait_for_selector("textarea")
         await page.fill("textarea", new_bio)
