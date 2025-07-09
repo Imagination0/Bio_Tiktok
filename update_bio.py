@@ -1,12 +1,12 @@
-import time
 import chromedriver_autoinstaller
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Auto-install Chromedriver yang cocok dengan versi Chrome kamu
+# Otomatis install chromedriver versi yang cocok
 chromedriver_autoinstaller.install()
 
 def update_tiktok_bio(new_bio):
@@ -15,7 +15,9 @@ def update_tiktok_bio(new_bio):
     options.add_argument("--profile-directory=Profile 6")
     options.add_argument("--start-maximized")
 
+    # Jangan gunakan driver manual! Biarkan auto installer yang handle
     driver = webdriver.Chrome(options=options)
+
     driver.get("https://www.tiktok.com/settings/profile")
 
     try:
@@ -27,6 +29,7 @@ def update_tiktok_bio(new_bio):
 
         save_button = driver.find_element(By.XPATH, "//button[contains(text(),'Save')]")
         save_button.click()
+
         print("✅ Bio berhasil diperbarui!")
 
     except Exception as e:
