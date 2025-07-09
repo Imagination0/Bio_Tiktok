@@ -1,0 +1,7 @@
+version: '3'
+services:
+  tiktok-bio-updater:
+    build: .
+    volumes:
+      - ./sessions:/app/sessions
+    restart: always
