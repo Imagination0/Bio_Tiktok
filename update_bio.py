@@ -6,12 +6,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+
+
 def update_tiktok_bio(new_bio):
+    print("🔧 Membuka sesi browser terhubung ke Chrome debug...")
+
     options = Options()
     options.debugger_address = "127.0.0.1:9222"
 
-    # Tidak perlu atur binary_location kalau pakai remote
     driver = webdriver.Chrome(options=options)
+    print("🌐 Navigasi ke halaman TikTok profile...")
 
     driver.get("https://www.tiktok.com/settings/profile")
 
