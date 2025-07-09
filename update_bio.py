@@ -10,7 +10,7 @@ def update_tiktok_bio(new_bio):
     options.add_argument(r"--user-data-dir=C:\Users\aldi\AppData\Local\Google\Chrome\User Data")
 
     # 2. Tentukan profile-directory (bukan Default, kalau kamu pakai yang lain)
-    options.add_argument("--profile-directory=Profile 1")  # Ganti sesuai hasil dari chrome://version
+    options.add_argument("--profile-directory=Profile 6")  # Ganti sesuai hasil dari chrome://version
 
     options.add_argument("--start-maximized")
 
