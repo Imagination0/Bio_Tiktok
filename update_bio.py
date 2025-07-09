@@ -2,16 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
-import os
 
-PROFILE_DIR = os.path.join(os.getcwd(), "chrome_profile")
+# Ganti dengan path ke profil Chrome kamu
+PROFILE_DIR = r"C:\Users\aldi\AppData\Local\Google\Chrome\User Data"
 
 def update_tiktok_bio(new_bio):
     options = Options()
-    options.add_argument(f"user-data-dir={PROFILE_DIR}")
+    options.add_argument(f"--user-data-dir={PROFILE_DIR}")
     options.add_argument("--start-maximized")
-    driver = webdriver.Chrome(options=options)
 
+    driver = webdriver.Chrome(options=options)
     driver.get("https://www.tiktok.com/settings/profile")
     time.sleep(10)
 
