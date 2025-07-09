@@ -1,26 +1,26 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 def update_tiktok_bio(new_bio):
     options = Options()
 
-    # 1. Path ke folder "User Data" Chrome kamu (bukan folder Profile-nya)
-    options.add_argument(r"--user-data-dir=C:\Users\aldi\AppData\Local\Google\Chrome\User Data")
+    # Pakai profil Chrome kamu yang sudah login TikTok
+    options.add_argument(r"--user-data-dir=C:\Users\Lenovo\AppData\Local\Google\Chrome\User Data")
+    options.add_argument("--profile-directory=Profile 6")
 
-    # 2. Tentukan profile-directory (bukan Default, kalau kamu pakai yang lain)
-    options.add_argument("--profile-directory=Profile 6")  # Ganti sesuai hasil dari chrome://version
-
+    # Jangan headless agar bisa lihat apa yang terjadi
     options.add_argument("--start-maximized")
 
     driver = webdriver.Chrome(options=options)
-
     driver.get("https://www.tiktok.com/settings/profile")
-    time.sleep(10)
 
     try:
-        textarea = driver.find_element(By.TAG_NAME, "textarea")
+        wait = WebDriverWait(driver, 30)
+        textarea = wait.until(EC.presence_of_element_located((By.TAG_NAME, "textarea")))
         textarea.clear()
         textarea.send_keys(new_bio)
         time.sleep(1)
