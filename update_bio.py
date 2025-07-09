@@ -10,17 +10,16 @@ chromedriver_autoinstaller.install()
 
 def update_tiktok_bio(new_bio):
     options = Options()
+    options.binary_location = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+
     options.add_argument(r"--user-data-dir=C:\Users\Lenovo\AppData\Local\Google\Chrome\User Data")
     options.add_argument("--profile-directory=Profile 6")
     options.add_argument("--start-maximized")
 
-    # ✅ FIX untuk error Chrome crash / DevToolsActivePort
+    # FIX Chrome crash
     options.add_argument("--disable-extensions")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-
-    # (Opsional) Jika masih gagal, bisa tambahkan:
-    # options.binary_location = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.tiktok.com/settings/profile")
