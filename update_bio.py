@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,22 +8,10 @@ import time
 
 def update_tiktok_bio(new_bio):
     options = Options()
+    options.debugger_address = "127.0.0.1:9222"
 
-    # Lokasi Chrome
-    options.binary_location = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-
-    # Profil Chrome baru (bukan yang berat / login Google)
-    options.add_argument(r"--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\User Data")
-    options.add_argument("--profile-directory=Profile 11")
-
-    # HANYA opsi minimum agar tidak crash
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-
-    # Mulai Chrome
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+    # Tidak perlu atur binary_location kalau pakai remote
+    driver = webdriver.Chrome(options=options)
 
     driver.get("https://www.tiktok.com/settings/profile")
 
@@ -37,7 +24,6 @@ def update_tiktok_bio(new_bio):
         save_button = driver.find_element(By.XPATH, "//button[contains(text(),'Save')]")
         save_button.click()
         print("✅ Bio berhasil diupdate")
-
     except Exception as e:
         print("❌ Error saat update bio:", e)
 
