@@ -1,29 +1,31 @@
-import time
-import chromedriver_autoinstaller
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-chromedriver_autoinstaller.install()
+import time
 
 def update_tiktok_bio(new_bio):
     options = Options()
+
+    # Lokasi Chrome
     options.binary_location = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+
+    # Profil Chrome baru (bukan yang berat / login Google)
     options.add_argument(r"--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\User Data")
-    options.add_argument("--profile-directory=Default")
+    options.add_argument("--profile-directory=Profile 2")
 
-    # Anti crash flags
-    options.add_argument("--disable-dev-shm-usage")
+    # HANYA opsi minimum agar tidak crash
     options.add_argument("--no-sandbox")
-    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
-    options.add_argument("--disable-software-rasterizer")
-    options.add_argument("--remote-debugging-port=9222")
-    options.add_argument("--start-maximized")
 
-    driver = webdriver.Chrome(options=options)
+    # Mulai Chrome
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+
     driver.get("https://www.tiktok.com/settings/profile")
 
     try:
@@ -37,7 +39,7 @@ def update_tiktok_bio(new_bio):
         print("✅ Bio berhasil diupdate")
 
     except Exception as e:
-        print("❌ Error:", e)
+        print("❌ Error saat update bio:", e)
 
     time.sleep(5)
     driver.quit()
