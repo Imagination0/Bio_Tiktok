@@ -15,7 +15,7 @@ def update_tiktok_bio(new_bio):
 
     # Profil Chrome baru (bukan yang berat / login Google)
     options.add_argument(r"--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Google\\Chrome\\User Data")
-    options.add_argument("--profile-directory=Profile 2")
+    options.add_argument("--profile-directory=Profile 11")
 
     # HANYA opsi minimum agar tidak crash
     options.add_argument("--no-sandbox")
